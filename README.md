@@ -53,3 +53,62 @@ create table horario(
 
 
 
+
+
+
+/*-------------------BASE DE DATOS RECURSIVA PERSONA---------------------------*/
+
+
+create table Persona(
+    id integer primary key,
+    idPadre integer ,
+    idMadre integer,
+    nombre varchar(60),
+    sexo varchar(20)
+);
+
+ALTER TABLE Persona ADD foreign key (idPadre) references Persona(id) on update NO ACTION on delete NO ACTION; 
+ALTER TABLE Persona ADD foreign key (idPadre) references Persona(id) on update NO ACTION on delete NO ACTION; 
+
+
+insert into Persona(id,idPadre,idMadre , nombre,sexo) values(1 ,NULL,NULL, "Joaquin Chumasero", "M")
+,(2 ,NULL,NULL, "Fabiola Colque", "F")
+,(3 ,1,2, "Pedro Chumasero Colque", "M")
+,(4 ,null,null, "Ana Aguilera P.", "F")
+,(5 ,3,4, "Joaquin Chumasero Aguilera", "M")
+,(6 ,null,null, "Fabiola Mendez", "F")
+,(7 ,5,6, "Joaquin JR. Chumasero Mendez", "M")
+,(8 ,5,6, "Carla JR. Chumasero Mendez", "F")
+,(9 ,null,null, "Patricia Fernandez", "F")
+,(10 ,5,9, "Juan Chumasero Fernandez", "M");
+
+
+/*select * from Persona; */
+
+
+
+
+/* mostrar el id y nombre del papa de joaquin chumacero aguilera --------------------------------------------------*/
+
+/*
+select Padre.id, Padre.nombre
+from Persona Hijo , Persona Padre
+where Hijo.idPadre = Padre.id and Hijo.nombre = "Joaquin Chumasero Aguilera";   */
+/* anidado------------*/
+/*select id,nombre 
+from Persona 
+where id = (select idPadre
+        from Persona
+        where nombre = "Joaquin Chumasero Aguilera");
+*/        
+        
+        
+
+/*mostrar los hijos de joaquin chumasero aguilera --------------------------------------------------*/
+select hijo.id, hijo.nombre
+from Persona Hijo , Persona Padre
+where hijo.idPadre = hijo.id and Padre.nombre = "Joaquin Chumasero Aguilera";   
+
+
+
+
